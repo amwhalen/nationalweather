@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../lib/nationalweather'
 
 class TestForecast < Test::Unit::TestCase
   
-  def test_values
+  def test_7day
     f = NationalWeather::Forecast.new(File.new(File.dirname(__FILE__) + "/xml/forecast_7day.xml"))
     
     # length of forecast
@@ -112,6 +112,38 @@ class TestForecast < Test::Unit::TestCase
       assert_equal(expectedConditionsStrings[i], day.conditions.to_s)
       assert_equal(expectedPrecipitation[i*2], day.precipitation_probability_day)
       assert_equal(expectedPrecipitation[i*2+1], day.precipitation_probability_night)
+    end
+
+  end
+
+  def test_conditions
+
+    f = NationalWeather::Forecast.new(File.new(File.dirname(__FILE__) + "/xml/forecast_conditions.xml"))
+
+    # conditions
+    expectedConditionsSummaries = [
+      'Chance Rain Showers',
+      'Partly Sunny',
+      'Chance Rain Showers',
+      'Chance Rain Showers',
+      'Slight Chance Rain Showers',
+      'Slight Chance Rain Showers',
+      'Slight Chance Rain Showers'
+    ]
+    expectedConditionsStrings = [
+      'Chance Rain Showers (chance light rain showers and patchy none fog)',
+      'Partly Sunny',
+      'Chance Rain Showers (chance light rain showers)',
+      'Chance Rain Showers (chance light rain showers)',
+      'Slight Chance Rain Showers (slight chance light rain showers)',
+      'Slight Chance Rain Showers (slight chance light rain showers)',
+      'Slight Chance Rain Showers (slight chance light rain showers)'
+    ]
+    i = 0
+    f.conditions.each do |c|
+      assert_equal(expectedConditionsSummaries[i], c.summary)
+      assert_equal(expectedConditionsStrings[i], c.to_s)
+      i += 1
     end
 
   end
