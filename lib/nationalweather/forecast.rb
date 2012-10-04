@@ -8,7 +8,30 @@ module NationalWeather
     def initialize(xml_string)
       @xml = REXML::Document.new xml_string
       @values = Hash.new
-      @days = Array.new
+    end
+
+    def day(index)
+      days[index]
+    end
+
+    def days
+      if !@values.has_key?('days')
+        days = Array.new
+        length.times do |i|
+          d = NationalWeather::Day.new
+          d.high = high_temperatures[i]
+          d.low = low_temperatures[i]
+          d.start_time = start_times[i]
+          d.end_time = end_times[i]
+          d.conditions = conditions[i]
+          d.icon = icons[i]
+          d.precipitation_probability_day = precipitation_probabilities[i*2]
+          d.precipitation_probability_night = precipitation_probabilities[i*2+1]
+          days.push(d)
+        end
+        @values['days'] = days
+      end
+      @values['days']
     end
 
     def length
@@ -65,6 +88,29 @@ module NationalWeather
         }
       end
       @values['hazards']
+    end
+
+    # Returns all Conditions objects for this forecast
+    def conditions
+      if !@values.has_key?('conditions')
+        allConditions = Array.new
+        @values['conditions'] = REXML::XPath.match(@xml, '/dwml/data[1]/parameters[1]/weather[1]/weather-conditions').map {|node|
+          # handle conditions with additional values
+          if node.has_elements?
+            cValues = Array.new
+            node.get_elements("value").each do |v|
+              atts = Hash.new
+              v.attributes.each do |k, v|
+                atts[k] = v.to_s
+              end
+              cValues.push(atts)
+            end
+          end
+          allConditions.push(NationalWeather::Conditions.new(node.attributes["weather-summary"], cValues))
+        }
+        @values['conditions'] = allConditions
+      end
+      @values['conditions']
     end
 
     private

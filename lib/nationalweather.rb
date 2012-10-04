@@ -4,6 +4,8 @@ require 'rexml/document'
 require 'nationalweather/current'
 require 'nationalweather/forecast'
 require 'nationalweather/hazard'
+require 'nationalweather/conditions'
+require 'nationalweather/day'
 
 module NationalWeather
 

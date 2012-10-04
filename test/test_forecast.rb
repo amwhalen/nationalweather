@@ -74,7 +74,45 @@ class TestForecast < Test::Unit::TestCase
     assert_equal(expectedHazard.url, hazard.url)
 
     # conditions
-    
+    expectedConditionsSummaries = [
+      'Snow Likely',
+      'Snow Likely',
+      'Chance Snow',
+      'Slight Chance Snow',
+      'Mostly Cloudy',
+      'Chance Snow',
+      'Mostly Cloudy'
+    ]
+    expectedConditionsStrings = [
+      'Snow Likely (likely light snow)',
+      'Snow Likely (likely light snow)',
+      'Chance Snow (chance light snow)',
+      'Slight Chance Snow (slight chance light snow)',
+      'Mostly Cloudy',
+      'Chance Snow (chance light snow)',
+      'Mostly Cloudy'
+    ]
+    i = 0
+    f.conditions.each do |c|
+      assert_equal(expectedConditionsSummaries[i], c.summary)
+      assert_equal(expectedConditionsStrings[i], c.to_s)
+      i += 1
+    end
+
+    # days
+    7.times do |i|
+      day = f.day(i)
+      assert_not_nil(day)
+      assert_equal(expectedHighs[i], day.high)
+      assert_equal(expectedLows[i], day.low)
+      assert_equal(expectedIcons[i], day.icon)
+      assert_equal(expectedStartTimes[i], day.start_time)
+      assert_equal(expectedEndTimes[i], day.end_time)
+      assert_equal(expectedConditionsSummaries[i], day.conditions.summary)
+      assert_equal(expectedConditionsStrings[i], day.conditions.to_s)
+      assert_equal(expectedPrecipitation[i*2], day.precipitation_probability_day)
+      assert_equal(expectedPrecipitation[i*2+1], day.precipitation_probability_night)
+    end
 
   end
 
