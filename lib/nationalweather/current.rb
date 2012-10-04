@@ -1,7 +1,7 @@
 
-module NOAA
+module NationalWeather
 
-  class CurrentWeather
+  class Current
 
     def initialize(xml_string)
       @xml = REXML::Document.new xml_string

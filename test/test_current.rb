@@ -1,10 +1,10 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/noaa'
+require File.dirname(__FILE__) + '/../lib/nationalweather'
 
-class TestCurrentWeather < Test::Unit::TestCase
+class TestCurrent < Test::Unit::TestCase
   
   def test_values
-    cw = NOAA::CurrentWeather.new(File.new("current_KBAF.xml"))
+    cw = NationalWeather::Current.new(File.new(File.dirname(__FILE__) + "/xml/current_KBAF.xml"))
     
     assert_equal(62.0, cw.temperature_f)
     assert_equal(16.7, cw.temperature_c)
