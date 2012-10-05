@@ -13,6 +13,10 @@ module NationalWeather
       @url = url
     end
 
+    def to_s
+      "#{@type} #{@phenomena} #{@significance}"
+    end
+
   end
 
 end

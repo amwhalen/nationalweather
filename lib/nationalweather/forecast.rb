@@ -91,13 +91,30 @@ module NationalWeather
     end
 
     # Returns all Conditions objects for this forecast
+    #
+    # MULTIPLE:
+    # <weather-conditions weather-summary="Chance Rain Showers">
+    #   <value coverage="chance" intensity="light" weather-type="rain showers" qualifier="none"/>
+    #   <value coverage="patchy" intensity="none" additive="and" weather-type="fog" qualifier="none"/>
+    # </weather-conditions>
+    #
+    # EMPTY:
+    # <weather-conditions weather-summary="Partly Sunny"/>
+    #
+    # SINGLE:
+    # <weather-conditions weather-summary="Chance Rain Showers">
+    #   <value coverage="chance" intensity="light" weather-type="rain showers" qualifier="none"/>
+    # </weather-conditions>
+    #
     def conditions
       if !@values.has_key?('conditions')
         allConditions = Array.new
         @values['conditions'] = REXML::XPath.match(@xml, '/dwml/data[1]/parameters[1]/weather[1]/weather-conditions').map {|node|
-          # handle conditions with additional values
+          # handle weather-conditions with child values
           if node.has_elements?
+            # Array to hold <value> attributes
             cValues = Array.new
+            # gather the attributes of each <value> into a Hash
             node.get_elements("value").each do |v|
               atts = Hash.new
               v.attributes.each do |k, v|
