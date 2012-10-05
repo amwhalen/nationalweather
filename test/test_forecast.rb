@@ -72,6 +72,7 @@ class TestForecast < Test::Unit::TestCase
     assert_equal(expectedHazard.significance, hazard.significance)
     assert_equal(expectedHazard.type, hazard.type)
     assert_equal(expectedHazard.url, hazard.url)
+    assert_equal("long duration Lake Wind Advisory", hazard.to_s)
 
     # conditions
     expectedConditionsSummaries = [
