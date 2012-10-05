@@ -14,6 +14,7 @@ forecast.hazards.each { |hazard|
   puts hazard
 }
 
+# display the forecast for each day
 forecast.days.each{ |day|
   puts "---"
   puts day.start_time.strftime("%A, %b %-d")

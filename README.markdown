@@ -15,7 +15,13 @@ You can search for your local station ID here: http://www.weather.gov/xml/curren
 There is also a list of stations in XML if you'd like to do something with the station data: http://www.weather.gov/xml/current_obs/index.xml.
 Here is some sample code for getting the current weather conditions:
 
-    # example code goes here
+	require File.dirname(__FILE__) + '/../lib/nationalweather'
+
+	cw = NationalWeather::current("KBAF")
+
+	# display the weather station location and current temp
+	puts cw.location
+	puts cw.temperature_f
 
 Forecast
 ========
@@ -27,7 +33,31 @@ The precipitation probabilities provided are 12-hour summaries for day and night
 Depending on the time of day you make the request (local to the location you request), the first day included in the response may be "today" or "tomorrow".
 Here is some sample code for getting the 7-day forecast starting from the current time:
 
-    # example code goes here
+    require 'time'
+	require File.dirname(__FILE__) + '/../lib/nationalweather'
+
+	# grab the forecast for a certain location
+	lat = 42.16;
+	lng = -72.72;
+	start = Time.now.strftime("%Y-%m-%d")
+	num_days = 7;
+	forecast = NationalWeather::forecast(lat, lng, start, num_days)
+
+	# display hazards (they're not associated with a day)
+	forecast.hazards.each { |hazard|
+	  puts hazard
+	}
+
+	# display the forecast for each day
+	forecast.days.each{ |day|
+	  puts "---"
+	  puts day.start_time.strftime("%A, %b %-d")
+	  puts day.conditions
+	  puts "High: #{day.high.to_s}"
+	  puts "Low: #{day.low.to_s}"
+	  puts "Precip Day: #{day.precipitation_probability_day} %"
+	  puts "Precip Night: #{day.precipitation_probability_night} %"
+	}
 
 Caching
 =======
