@@ -1,5 +1,5 @@
-NationWeather
-=============
+NationalWeather
+===============
 
 Overview
 --------
@@ -20,12 +20,13 @@ Here is some sample code for getting the current weather conditions:
 
 	require 'nationalweather'
 
-	# KBAF is a weather station ID
-	cw = NationalWeather.current("KBAF")
-
-	# display the weather station location and current temp
-	puts cw.location
-	puts cw.temperature_f
+	begin
+	  cw = NationalWeather.current("KBAF")
+	  puts cw.location
+	  puts cw.temperature_f
+	rescue Exception => e
+	  puts "There was an error fetching the current weather: #{e.message}"  
+	end
 
 Forecast
 --------
@@ -45,7 +46,12 @@ Here is some sample code for getting the 7-day forecast starting from the curren
 	lng = -72.72;
 	start = Time.now.strftime("%Y-%m-%d")
 	num_days = 7;
-	forecast = NationalWeather.forecast(lat, lng, start, num_days)
+
+	begin
+	  forecast = NationalWeather.forecast(lat, lng, start, num_days)
+	rescue Exception => e
+	  abort("There was an error fetching the forecast: #{e.message}")
+	end
 
 	# display hazards (they're not associated with a day)
 	forecast.hazards.each { |hazard|

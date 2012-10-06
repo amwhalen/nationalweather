@@ -6,5 +6,5 @@ begin
   puts cw.location
   puts cw.temperature_f
 rescue Exception => e
-  puts "There was an error fetching the current weather: #{e.message}"  
+  abort("There was an error fetching the current weather: #{e.message}")
 end
