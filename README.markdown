@@ -1,5 +1,8 @@
+NationWeather
+=============
+
 Overview
-========
+--------
 
 This library provides a Ruby client for NOAA's forecast and current weather services.
 
@@ -8,23 +11,24 @@ Forecast data is provided by the [NOAA's National Digital Forecast Database (NDF
 The National Oceanic and Atmospheric Administration (NOAA) is a United States federal agency, so the data they provide is only available for US locations.
 
 Current Weather Conditions
-==========================
+--------------------------
 
 To find your current weather conditions you'll first need to know a local NOAA Weather Observation Station ID.
 You can search for your local station ID here: http://www.weather.gov/xml/current_obs/.
 There is also a list of stations in XML if you'd like to do something with the station data: http://www.weather.gov/xml/current_obs/index.xml.
 Here is some sample code for getting the current weather conditions:
 
-	require File.dirname(__FILE__) + '/../lib/nationalweather'
+	require 'nationalweather'
 
-	cw = NationalWeather::current("KBAF")
+	# KBAF is a weather station ID
+	cw = NationalWeather.current("KBAF")
 
 	# display the weather station location and current temp
 	puts cw.location
 	puts cw.temperature_f
 
 Forecast
-========
+--------
 
 A latitude and longitude are required to retrieve forecast data.
 There are many APIs that will convert addresses and zip codes into latitude and longitude, but those conversions are outside the scope of this library.
@@ -34,14 +38,14 @@ Depending on the time of day you make the request (local to the location you req
 Here is some sample code for getting the 7-day forecast starting from the current time:
 
     require 'time'
-	require File.dirname(__FILE__) + '/../lib/nationalweather'
+	require 'nationalweather'
 
 	# grab the forecast for a certain location
 	lat = 42.16;
 	lng = -72.72;
 	start = Time.now.strftime("%Y-%m-%d")
 	num_days = 7;
-	forecast = NationalWeather::forecast(lat, lng, start, num_days)
+	forecast = NationalWeather.forecast(lat, lng, start, num_days)
 
 	# display hazards (they're not associated with a day)
 	forecast.hazards.each { |hazard|
@@ -60,6 +64,6 @@ Here is some sample code for getting the 7-day forecast starting from the curren
 	}
 
 Caching
-=======
+-------
 
 NOAA suggests that consumers of their API ask for new data only once per hour.

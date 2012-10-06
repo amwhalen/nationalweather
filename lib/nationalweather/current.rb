@@ -3,6 +3,7 @@ module NationalWeather
 
   class Current
 
+    # if the xml is invalid, subsequent calls to retrieve values will return nil
     def initialize(xml_string)
       @xml = REXML::Document.new xml_string
     end
