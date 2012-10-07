@@ -1,14 +1,11 @@
 NationalWeather
 ===============
 
-Overview
---------
-
-This library provides a Ruby client for NOAA's forecast and current weather services.
+NationalWeather is a Ruby client library for the National Oceanic and Atmospheric Administration's (NOAA) National Weather Service (NWS) forecast and current weather services.
 
 Current weather data is provided by [NOAA's XML Feeds of Current Weather Conditions](http://w1.weather.gov/xml/current_obs/).
 Forecast data is provided by the [NOAA's National Digital Forecast Database (NDFD) REST Web Service](http://graphical.weather.gov/xml/rest.php).
-The National Oceanic and Atmospheric Administration (NOAA) is a United States federal agency, so the data they provide is only available for US locations.
+NOAA is a United States federal agency, so the data they provide is only available for US locations.
 
 Current Weather Conditions
 --------------------------
