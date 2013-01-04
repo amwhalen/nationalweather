@@ -7,6 +7,13 @@ Current weather data is provided by [NOAA's XML Feeds of Current Weather Conditi
 Forecast data is provided by the [NOAA's National Digital Forecast Database (NDFD) REST Web Service](http://graphical.weather.gov/xml/rest.php).
 NOAA is a United States federal agency, so the data they provide is only available for US locations.
 
+Installation
+------------
+
+It's as simple as:
+
+	gem install nationalweather
+
 Current Weather Conditions
 --------------------------
 

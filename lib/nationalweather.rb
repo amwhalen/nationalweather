@@ -10,7 +10,7 @@ require 'nationalweather/day'
 
 module NationalWeather
 
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   # Returns the current weather conditions at the station id specified, or nil if there was an error.
   # For the station ID see: http://www.weather.gov/xml/current_obs/
