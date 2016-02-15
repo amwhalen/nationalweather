@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'nationalweather'
-  s.version     = '0.1.1'
-  s.date        = '2013-01-04'
+  s.version     = '0.1.2'
+  s.date        = '2016-02-15'
   s.summary     = "Client library for NOAA's forecast and current weather services."
   s.description = "NationalWeather is a Ruby client library for the National Oceanic and Atmospheric Administration's (NOAA) National Weather Service (NWS) forecast and current weather REST web services."
   s.authors     = ["Andrew M. Whalen"]

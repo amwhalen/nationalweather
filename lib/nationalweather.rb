@@ -10,13 +10,13 @@ require 'nationalweather/day'
 
 module NationalWeather
 
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   # Returns the current weather conditions at the station id specified, or nil if there was an error.
   # For the station ID see: http://www.weather.gov/xml/current_obs/
   # XML list of stations: http://www.weather.gov/xml/current_obs/index.xml
   def NationalWeather::current(station_id)
-    xml = fetch("http://www.weather.gov/xml/current_obs/#{station_id}.xml")
+    xml = fetch("http://w1.weather.gov/xml/current_obs/#{station_id}.xml")
     NationalWeather::Current.new(xml)
   end
 
@@ -44,7 +44,13 @@ module NationalWeather
 
     raise NationalWeather::TooManyRedirectsError, 'Too many HTTP redirects.' if limit == 0
 
-    response = Net::HTTP.get_response(URI(uri_str))
+    uri = URI(uri_str)
+    req = Net::HTTP::Get.new(uri)
+    req['User-Agent'] = "amwhalen-ruby-nationalweather-#{NationalWeather::VERSION}"
+
+    response = Net::HTTP.start(uri.hostname, uri.port) {|http|
+      http.request(req)
+    }
 
     case response
     when Net::HTTPSuccess then
